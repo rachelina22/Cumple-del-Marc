@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f1e4">
+  <title>Per molts anys, Marc!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f6f1e4;
+      --olive: #b3b82c;
+      --navy: #2e4a8c;
+      --ink: #1d2c5a;
+      --pink: #f3a9ba;
+      --yellow: #fbd24d;
+      --sage: #a8be7c;
+      --font-d: 'Fredoka', system-ui, sans-serif;
+      --font-b: 'Nunito', system-ui, sans-serif;
+      --font-h: 'Caveat', cursive;
+      --aw: min(78vw, 330px);
+      --aw: min(78vw, 330px, calc(50svh * 5 / 7));
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.55;
+      overflow-x: hidden;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    body.locked { overflow: hidden; touch-action: none; }
+
+    /* Textura de paper */
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 999; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    em { font-family: var(--font-h); font-style: normal; font-size: 1.4em; color: var(--navy); }
+    h1, h2, h3 { font-family: var(--font-d); line-height: 1.12; }
+
+    .eyebrow {
+      font: 700 .74rem var(--font-b);
+      letter-spacing: .22em; text-transform: uppercase;
+      margin-bottom: .9rem;
+    }
+
+    /* ---------- Botons (adhesiu de paper) ---------- */
+    .btn {
+      display: inline-block; font: 600 1.05rem var(--font-d);
+      padding: .95rem 1.8rem; min-height: 48px;
+      border: none; border-radius: 999px;
+      background: var(--pink); color: var(--ink);
+      box-shadow: 3px 4px 0 var(--navy);
+      cursor: pointer; text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn:active { transform: translate(2px, 3px); box-shadow: 1px 1px 0 var(--navy); }
+    .btn.yellow { background: var(--yellow); }
+
+    /* ---------- Targeta (art) ---------- */
+    .art {
+      position: relative; width: var(--aw); aspect-ratio: 5 / 7;
+      --u: calc(var(--aw) / 100);
+      background: #fbf8ef; border-radius: 3px;
+      box-shadow: 0 12px 30px rgba(29,44,90,.28), 0 2px 0 rgba(255,255,255,.9) inset;
+    }
+    .art .panel {
+      position: absolute; left: 9%; right: 9%; top: 6%; bottom: 6%;
+      background: var(--olive); overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,.25);
+    }
+    .art .burst {
+      position: absolute; left: -14%; top: 12%; width: 128%; aspect-ratio: 1;
+      fill: var(--navy); transform: rotate(-8deg);
+    }
+    .star {
+      position: absolute; aspect-ratio: 1; fill: var(--c);
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,.28));
+    }
+    .s-pink   { --c: var(--pink);   width: 36%; right: -2%; top: 3%;  transform: rotate(14deg); }
+    .s-sage   { --c: var(--sage);   width: 32%; left: 10%;  top: 70%; transform: rotate(16deg); }
+    .s-pink2  { --c: var(--pink);   width: 21%; left: 38%;  bottom: 1.5%; transform: rotate(-16deg); }
+    .s-white  { --c: #fff;          width: 12%; right: 7%;  bottom: 13%; transform: rotate(8deg); }
+    .badge {
+      position: absolute; right: 2%; top: 56%; width: 34%; aspect-ratio: 1;
+      transform: rotate(-12deg);
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,.28));
+    }
+    .badge svg { width: 100%; height: 100%; fill: var(--yellow); }
+    .badge b {
+      position: absolute; inset: 0; display: grid; place-items: center; padding-top: 8%;
+      font: 700 calc(var(--u) * 9) var(--font-d); color: var(--ink);
+    }
+    .bunting {
+      position: absolute; left: -4%; top: 1.5%; width: 56%; height: auto;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,.25));
+    }
+    .figure { position: absolute; left: 50%; top: 15%; width: 44%; transform: translateX(-50%); }
+    .hat {
+      display: block; width: 68%; margin: 0 auto -24%; position: relative; z-index: 2;
+      overflow: visible; transform: rotate(-3deg);
+      filter: drop-shadow(0 3px 3px rgba(0,0,0,.3));
+    }
+    .cutout {
+      position: relative; width: 100%; aspect-ratio: 1 / 1.08;
+      border: calc(var(--u) * 1.6) solid #fff;
+      border-radius: 50% 50% 46% 46% / 44% 44% 56% 56%;
+      background: linear-gradient(160deg, var(--pink), var(--yellow));
+      overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,.3);
+    }
+    .cutout img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .cutout img:not([src]) { display: none; }
+    .cutout .ph {
+      position: absolute; inset: 0; display: grid; place-items: end center; padding-bottom: 10%;
+      font: 700 calc(var(--u) * 17) var(--font-d); color: var(--ink);
+    }
+    .cutout.has-photo .ph { display: none; }
+
+    /* ---------- Portada (targeta que s'obre) ---------- */
+    .cover {
+      position: fixed; inset: 0; z-index: 50; background: var(--cream);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.6rem;
+      perspective: 1400px; padding: 1rem;
+      transition: opacity .6s ease 1.1s;
+    }
+    .cover-stage { position: relative; width: var(--aw); aspect-ratio: 5 / 7; }
+    .cover-inside {
+      position: absolute; inset: 0; background: #fffaf0; border-radius: 3px;
+      display: grid; place-items: center; text-align: center;
+      font: 600 2.2rem/1.1 var(--font-h); color: var(--navy);
+      box-shadow: 0 12px 30px rgba(29,44,90,.25);
+    }
+    .cover-card {
+      position: absolute; inset: 0; transform-origin: left center;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      transition: transform 1.1s cubic-bezier(.6,.05,.2,1);
+    }
+    .cover-card .art { width: 100%; height: 100%; }
+    .cover-text { text-align: center; transition: opacity .3s; }
+    .cover-small { font: 600 1.9rem/1 var(--font-h); color: var(--navy); margin-bottom: .8rem; }
+    .cover.open { opacity: 0; pointer-events: none; }
+    .cover.open .cover-card { transform: rotateY(-165deg); }
+    .cover.open .cover-text { opacity: 0; }
+    .cover.done { display: none; }
+
+    /* ---------- Contingut ---------- */
+    .content { transition: opacity 1s; }
+    .hidden { opacity: 0; }
+
+    .hero {
+      min-height: 100vh; min-height: 100svh;
+      padding: 2rem 1.25rem 3rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    }
+    .hero-art { margin-bottom: 1.8rem; }
+    .hero h1 { font-size: clamp(2.1rem, 10vw, 3.5rem); font-weight: 700; margin-bottom: 1.2rem; }
+    .hero h1 span {
+      display: inline-block; margin-top: .3rem; padding: .02em .35em;
+      background: var(--yellow); border-radius: 12px; transform: rotate(-2deg);
+      box-shadow: 3px 4px 0 var(--navy);
+    }
+    .lead { font-size: 1.05rem; margin-bottom: 1.8rem; }
+
+    /* Bandes de paper */
+    .band {
+      position: relative; width: calc(100% - 24px); max-width: 560px;
+      margin: 1.6rem auto; padding: 3rem 1.25rem; border-radius: 26px; text-align: center;
+      box-shadow: 0 8px 0 rgba(29,44,90,.14);
+    }
+    .band::before, .band::after {
+      content: ""; position: absolute; background: var(--yellow);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+    .band::before { width: 54px; height: 54px; top: -20px; right: -6px; transform: rotate(14deg); }
+    .band::after  { width: 42px; height: 42px; bottom: -16px; left: -4px; transform: rotate(-16deg); background: var(--pink); }
+    .band.olive { background: var(--olive); }
+    .band.navy  { background: var(--navy); color: var(--cream); }
+    .band.navy::before { background: var(--pink); }
+    .band.navy::after  { background: var(--yellow); }
+    .band.pink  { background: var(--pink); }
+    .band.pink::before { background: var(--yellow); }
+    .band.pink::after  { background: var(--navy); }
+
+    /* Regal */
+    .gift-box {
+      position: relative; width: 150px; height: 150px; margin: 0 auto 1rem;
+      cursor: pointer; animation: bob 2.2s ease-in-out infinite;
+    }
+    .gift-box .box {
+      position: absolute; bottom: 0; width: 100%; height: 105px;
+      background: var(--pink); border-radius: 6px;
+      box-shadow: 0 6px 0 rgba(29,44,90,.35);
+    }
+    .gift-box .lid {
+      position: absolute; top: 18px; left: -8px; width: calc(100% + 16px); height: 40px;
+      background: #ee90a6; border-radius: 6px; z-index: 2;
+      box-shadow: 0 3px 0 rgba(29,44,90,.25);
+      transition: transform .6s cubic-bezier(.3,1.6,.5,1);
+    }
+    .gift-box .ribbon-v {
+      position: absolute; left: 50%; top: 18px; bottom: 0; width: 22px; margin-left: -11px;
+      background: var(--yellow); z-index: 3; transition: opacity .4s;
+    }
+    .gift-box.opened { animation: none; }
+    .gift-box.opened .lid { transform: translateY(-60px) rotate(-18deg); }
+    .gift-box.opened .ribbon-v { opacity: 0; }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .hint { font: 600 1.7rem var(--font-h); color: var(--ink); }
+
+    .ticket-wrap { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 1.2s ease, opacity 1s ease .2s; }
+    .ticket-wrap.show { max-height: 1600px; opacity: 1; margin-top: 2rem; }
+    .ticket-wrap h2 { font-size: clamp(1.55rem, 7vw, 2.3rem); font-weight: 700; margin-bottom: 2rem; }
+    .tag {
+      display: inline-block; padding: 0 .35em; background: var(--cream); border-radius: 10px;
+      transform: rotate(-2deg); box-shadow: 2px 3px 0 var(--navy);
+    }
+
+    /* Entrada */
+    .ticket {
+      display: flex; flex-direction: column; text-align: left; position: relative;
+      max-width: 560px; margin: 0 auto; border-radius: 16px;
+      background: var(--cream); color: var(--ink);
+      transform: rotate(-1.5deg);
+      box-shadow: 0 6px 0 rgba(29,44,90,.25), 0 14px 28px rgba(29,44,90,.25);
+    }
+    .t-main { padding: 1.5rem 1.4rem 1.3rem; }
+    .t-label { font: 700 .7rem var(--font-b); letter-spacing: .25em; text-transform: uppercase; color: var(--navy); }
+    .t-main h3 { font-size: 3rem; font-weight: 700; letter-spacing: .06em; margin: .1rem 0 .3rem; color: var(--navy); }
+    .t-venue { font-weight: 700; }
+    .t-addr { font-size: .86rem; opacity: .75; margin-bottom: 1.1rem; }
+    .t-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1rem; }
+    .t-row span { display: block; font-size: .62rem; text-transform: uppercase; letter-spacing: .15em; opacity: .6; font-weight: 700; }
+    .t-row strong { font: 600 1.02rem/1.3 var(--font-d); display: block; }
+    .t-stub {
+      position: relative; background: var(--yellow); border-radius: 0 0 16px 16px;
+      border-top: 2px dashed var(--navy);
+      padding: .9rem 1.4rem; display: flex; align-items: center; justify-content: center; gap: .8rem;
+    }
+    .t-stub::before, .t-stub::after {
+      content: ""; position: absolute; top: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--olive);
+    }
+    .t-stub::before { left: -11px; }
+    .t-stub::after  { right: -11px; }
+    .t-num { font: 700 2.6rem/1 var(--font-d); color: var(--navy); }
+    .t-txt { font: 700 .8rem var(--font-b); letter-spacing: .2em; text-transform: uppercase; }
+
+    /* Afegeix al calendari */
+    .cal { margin-top: 1.8rem; display: flex; flex-direction: column; align-items: center; gap: .9rem; }
+    .cal-link { font: 600 .9rem var(--font-b); color: var(--ink); text-underline-offset: 3px; }
+
+    /* Compte enrere */
+    .hidden-soft { opacity: 0; transform: translateY(30px); transition: opacity 1s, transform 1s; }
+    .hidden-soft.show { opacity: 1; transform: none; }
+    .cd { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; max-width: 400px; margin: 0 auto; }
+    .cd div { padding: .9rem .2rem; border-radius: 12px; color: var(--ink); box-shadow: 0 4px 0 rgba(0,0,0,.28); }
+    .cd div:nth-child(1) { background: var(--pink);   transform: rotate(-2deg); }
+    .cd div:nth-child(2) { background: var(--yellow); transform: rotate(1.5deg); }
+    .cd div:nth-child(3) { background: var(--sage);   transform: rotate(-1deg); }
+    .cd div:nth-child(4) { background: #fff;          transform: rotate(2deg); }
+    .cd strong { display: block; font: 700 1.8rem/1.1 var(--font-d); }
+    .cd span { font: 700 .62rem var(--font-b); text-transform: uppercase; letter-spacing: .12em; }
+
+    /* Missatge */
+    .note {
+      position: relative; background: #fffaf0; padding: 2.2rem 1.3rem 1.7rem; border-radius: 6px;
+      transform: rotate(1.2deg);
+      box-shadow: 0 6px 0 rgba(29,44,90,.18), 0 14px 26px rgba(0,0,0,.15);
+    }
+    .note::before {
+      content: ""; position: absolute; top: -14px; left: 50%; width: 110px; height: 28px;
+      transform: translateX(-50%) rotate(-3deg); background: rgba(251,210,77,.88);
+    }
+    .quote { font: 600 1.65rem/1.25 var(--font-h); color: var(--ink); margin-bottom: 1rem; }
+    .sign { font: 600 1rem var(--font-d); color: var(--navy); margin-bottom: 1.4rem; }
+
+    footer { text-align: center; padding: 2rem 1rem 3rem; font-size: .85rem; opacity: .7; }
+
+    #confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 60; }
+
+    @media (min-width: 600px) {
+      .band { padding: 3.5rem 2rem; }
+      .ticket { flex-direction: row; }
+      .t-main { flex: 1; padding: 1.8rem; }
+      .t-stub {
+        width: 130px; flex-direction: column; border-top: none; border-left: 2px dashed var(--navy);
+        border-radius: 0 16px 16px 0;
+      }
+      .t-stub::before, .t-stub::after { left: -11px; right: auto; }
+      .t-stub::before { top: -11px; }
+      .t-stub::after  { top: auto; bottom: -11px; }
+      .cd strong { font-size: 2.3rem; }
+      .quote { font-size: 1.9rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Símbols reutilitzables -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="star" viewBox="0 0 100 100">
+        <path d="M50 4 L62.34 35.01 L95.65 37.17 L69.97 58.49 L78.2 90.83 L50 73 L21.8 90.83 L30.03 58.49 L4.35 37.17 L37.66 35.01 Z"/>
+      </symbol>
+      <symbol id="burst" viewBox="0 0 200 200">
+        <polygon id="burstPoly"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Plantilla de la targeta (es clona a la portada i a l'inici) -->
+  <template id="artTpl">
+    <div class="art">
+      <div class="panel">
+        <svg class="burst" aria-hidden="true"><use href="#burst"/></svg>
+      </div>
+
+      <svg class="star s-pink" aria-hidden="true"><use href="#star"/></svg>
+      <svg class="star s-sage" aria-hidden="true"><use href="#star"/></svg>
+      <svg class="star s-pink2" aria-hidden="true"><use href="#star"/></svg>
+      <svg class="star s-white" aria-hidden="true"><use href="#star"/></svg>
+      <div class="badge"><svg aria-hidden="true"><use href="#star"/></svg><b>23</b></div>
+
+      <svg class="bunting" viewBox="0 0 300 130" aria-hidden="true">
+        <path d="M5 15 Q150 115 295 15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+        <g transform="translate(34 33) rotate(29)">
+          <polygon points="-22,-2 22,-2 0,50" fill="#f3a9ba" stroke="#fff" stroke-width="6" paint-order="stroke" stroke-linejoin="round"/>
+          <text y="20" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="#1d2c5a">H</text>
+        </g>
+        <g transform="translate(92 57) rotate(15)">
+          <polygon points="-22,-2 22,-2 0,50" fill="#fbd24d" stroke="#fff" stroke-width="6" paint-order="stroke" stroke-linejoin="round"/>
+          <text y="20" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="#1d2c5a">A</text>
+        </g>
+        <g transform="translate(150 65)">
+          <polygon points="-22,-2 22,-2 0,50" fill="#a8be7c" stroke="#fff" stroke-width="6" paint-order="stroke" stroke-linejoin="round"/>
+          <text y="20" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="#1d2c5a">P</text>
+        </g>
+        <g transform="translate(208 57) rotate(-15)">
+          <polygon points="-22,-2 22,-2 0,50" fill="#fbd24d" stroke="#fff" stroke-width="6" paint-order="stroke" stroke-linejoin="round"/>
+          <text y="20" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="#1d2c5a">P</text>
+        </g>
+        <g transform="translate(266 33) rotate(-29)">
+          <polygon points="-22,-2 22,-2 0,50" fill="#f3a9ba" stroke="#fff" stroke-width="6" paint-order="stroke" stroke-linejoin="round"/>
+          <text y="20" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="#1d2c5a">Y</text>
+        </g>
+      </svg>
+
+      <div class="figure">
+        <svg class="hat" viewBox="0 0 140 210" aria-hidden="true">
+          <polygon points="70,22 8,196 132,196" fill="#fff" stroke="#fff" stroke-width="12" stroke-linejoin="round"/>
+          <polygon points="70,22 8,196 32.8,196"    fill="#f3a9ba"/>
+          <polygon points="70,22 32.8,196 57.6,196" fill="#fbd24d"/>
+          <polygon points="70,22 57.6,196 82.4,196" fill="#f3a9ba"/>
+          <polygon points="70,22 82.4,196 107.2,196" fill="#fbd24d"/>
+          <polygon points="70,22 107.2,196 132,196" fill="#f3a9ba"/>
+          <use href="#star" x="48" y="0" width="44" height="44" fill="#fff" stroke="#fff" stroke-width="10" stroke-linejoin="round"/>
+          <use href="#star" x="48" y="0" width="44" height="44" fill="#fbd24d"/>
+        </svg>
+        <div class="cutout">
+          <div class="ph">M</div>
+          <img alt="Marc">
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Portada: targeta que s'obre -->
+  <div id="cover" class="cover" role="button" tabindex="0" aria-label="Obrir la targeta">
+    <div class="cover-stage">
+      <div class="cover-inside">Per a en<br>Marc ♥</div>
+      <div class="cover-card" data-art></div>
+    </div>
+    <div class="cover-text">
+      <p class="cover-small">Tens una sorpresa</p>
+      <button id="openBtn" class="btn">Obre la targeta</button>
+    </div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+
+  <main id="content" class="content hidden">
+
+    <!-- INICI -->
+    <section class="hero">
+      <div class="hero-art" data-art></div>
+      <h1>Per molts anys,<br><span id="nom">Marc!</span></h1>
+      <p class="lead">Aquest any no hi ha res per desembolicar…<br>hi ha una tadrda per <em>viure</em>.</p>
+      <a href="#regal" class="btn">Descobreix el teu regal ↓</a>
+    </section>
+
+    <!-- REGAL -->
+    <section id="regal" class="band olive">
+      <div class="gift-box" id="giftBox" role="button" tabindex="0" aria-label="Obrir el regal">
+        <div class="lid"></div>
+        <div class="box"></div>
+        <div class="ribbon-v"></div>
+      </div>
+      <p class="hint" id="giftHint">Toca el regal</p>
+
+      <div id="ticketWrap" class="ticket-wrap">
+        <p class="eyebrow">El teu regal és…</p>
+        <h2>Dues entrades per al concert final de <span class="tag">Viñas</span></h2>
+
+        <article class="ticket">
+          <div class="t-main">
+            <p class="t-label">Concert final</p>
+            <h3>VIÑAS</h3>
+            <p class="t-venue">Gran Teatre del Liceu</p>
+            <p class="t-addr">La Rambla, 51-59 · Barcelona</p>
+            <div class="t-row">
+              <div><span>Dia</span><strong id="tFecha">—</strong></div>
+              <div><span>Hora</span><strong id="tHora">—</strong></div>
+            </div>
+          </div>
+          <div class="t-stub">
+            <div class="t-num">2</div>
+            <div class="t-txt">entrades</div>
+          </div>
+        </article>
+
+        <div class="cal">
+          <button id="calBtn" class="btn yellow">📅 Afegeix al calendari</button>
+          <a id="gcalLink" class="cal-link" target="_blank" rel="noopener">o obre-ho a Google Calendar</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPTE ENRERE -->
+    <section id="countdownSection" class="band navy hidden-soft">
+      <p class="eyebrow" id="cdTitle">Falten</p>
+      <div class="cd">
+        <div><strong id="cdD">00</strong><span>dies</span></div>
+        <div><strong id="cdH">00</strong><span>hores</span></div>
+        <div><strong id="cdM">00</strong><span>min</span></div>
+        <div><strong id="cdS">00</strong><span>seg</span></div>
+      </div>
+    </section>
+
+    <!-- MISSATGE -->
+    <section id="messageSection" class="band pink hidden-soft">
+      <div class="note">
+        <p class="quote">Per molts anys, Marc! Que no et falti mai la música, ni les rateades, ni les ganes de passar-t'ho bé. El 24 de gener, al Liceu, serà una tarda per recordar… i jo vinc amb tu.</p>
+        <p class="sign">— Per moltes rateades!! ❤️</p>
+        <button id="confettiBtn" class="btn yellow">🎉 Més confeti</button>
+      </div>
+    </section>
+
+    <footer>
+      <p>Fet amb molt d'afecte per als 23 anys d'en Marc que menja papilla de fruites!!! ✨</p>
+    </footer>
+  </main>
+
+  <script>
+    // ============================================
+    //  DADES (canvia-les aquí si cal)
+    // ============================================
+    const CONFIG = {
+      nom: "Marc",
+      dataConcert: "2027-01-24T18:00:00+01:00", // diumenge 24/01/2027, 18:00 h (hora de Barcelona)
+      duracioMin: 120,                          // durada aproximada, només per al calendari
+      foto: ""                            // opcional: ruta o dada base64 de la foto retallada (p. ex. "marc.jpg")
+    };
+    // ============================================
+
+    const $ = (id) => document.getElementById(id);
+    const isMobile = () => innerWidth < 600;
+
+    // --- Explosió blava (irregular, com la targeta) ---
+    (function () {
+      const longs = [100, 78, 96, 70, 100, 84, 92, 74];
+      const pts = [];
+      for (let i = 0; i < 16; i++) {
+        const r = i % 2 === 0 ? longs[i / 2] : 38;
+        const a = -Math.PI / 2 + i * (Math.PI / 8);
+        pts.push((100 + r * Math.cos(a)).toFixed(1) + "," + (100 + r * Math.sin(a)).toFixed(1));
+      }
+      $("burstPoly").setAttribute("points", pts.join(" "));
+    })();
+
+    // --- Clonar la targeta a la portada i a l'inici ---
+    const tpl = $("artTpl");
+    document.querySelectorAll("[data-art]").forEach((el) => el.appendChild(tpl.content.cloneNode(true)));
+
+    // --- Foto opcional ---
+    if (CONFIG.foto) {
+      document.querySelectorAll(".cutout").forEach((c) => {
+        const img = c.querySelector("img");
+        img.onload = () => c.classList.add("has-photo");
+        img.onerror = () => img.removeAttribute("src");
+        img.src = CONFIG.foto;
+      });
+    }
+
+    // --- Dades bàsiques ---
+    $("nom").textContent = CONFIG.nom + "!";
+    const data = new Date(CONFIG.dataConcert);
+    $("tFecha").textContent = data.toLocaleDateString("ca-ES", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Madrid" });
+    $("tHora").textContent = data.toLocaleTimeString("ca-ES", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Madrid" }) + " h";
+
+    // --- Portada ---
+    document.body.classList.add("locked");
+    const cover = $("cover");
+
+    function openCover() {
+      if (cover.classList.contains("open")) return;
+      cover.classList.add("open");
+      $("content").classList.remove("hidden");
+      setTimeout(() => launchConfetti(160), 900);
+      setTimeout(() => {
+        cover.classList.add("done");
+        document.body.classList.remove("locked");
+      }, 1800);
+    }
+    $("openBtn").addEventListener("click", (e) => { e.stopPropagation(); openCover(); });
+    cover.addEventListener("click", openCover);
+    cover.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") openCover(); });
+
+    // --- Regal ---
+    const giftBox = $("giftBox");
+    function openGift() {
+      if (giftBox.classList.contains("opened")) return;
+      giftBox.classList.add("opened");
+      $("giftHint").style.display = "none";
+      $("ticketWrap").classList.add("show");
+      launchConfetti(220);
+      setTimeout(() => {
+        const y = giftBox.getBoundingClientRect().top + scrollY - 16;
+        scrollTo({ top: y, behavior: "smooth" });
+      }, 350);
+      setTimeout(() => {
+        $("countdownSection").classList.add("show");
+        $("messageSection").classList.add("show");
+      }, 900);
+    }
+    giftBox.addEventListener("click", openGift);
+    giftBox.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") openGift(); });
+
+    // --- Compte enrere ---
+    const pad = (n) => String(n).padStart(2, "0");
+    function tick() {
+      const diff = data - new Date();
+      if (diff <= 0) {
+        $("cdTitle").textContent = "Avui és el gran dia!";
+        ["cdD", "cdH", "cdM", "cdS"].forEach((id) => ($(id).textContent = "00"));
+        return;
+      }
+      $("cdD").textContent = pad(Math.floor(diff / 864e5));
+      $("cdH").textContent = pad(Math.floor(diff / 36e5) % 24);
+      $("cdM").textContent = pad(Math.floor(diff / 6e4) % 60);
+      $("cdS").textContent = pad(Math.floor(diff / 1e3) % 60);
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // --- Afegeix al calendari ---
+    (function () {
+      const titol = "Concert final Viñas";
+      const lloc = "Gran Teatre del Liceu, La Rambla, 51-59, 08002 Barcelona";
+      const desc = "Dues entrades per al concert final de Viñas. Regal d'aniversari ❤️";
+      const inici = data;
+      const fi = new Date(inici.getTime() + CONFIG.duracioMin * 60000);
+      const fmt = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+      const esc = (s) => s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+
+      // Enllaç per a Google Calendar
+      $("gcalLink").href =
+        "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        "&text=" + encodeURIComponent(titol) +
+        "&dates=" + fmt(inici) + "/" + fmt(fi) +
+        "&details=" + encodeURIComponent(desc) +
+        "&location=" + encodeURIComponent(lloc) +
+        "&ctz=Europe/Madrid";
+
+      // Arxiu .ics (iPhone, Android, Outlook…)
+      function descarregarICS() {
+        const lines = [
+          "BEGIN:VCALENDAR",
+          "VERSION:2.0",
+          "PRODID:-//Cumple Marc//Concert Final Vinyas//CA",
+          "CALSCALE:GREGORIAN",
+          "METHOD:PUBLISH",
+          "BEGIN:VEVENT",
+          "UID:concert-final-vinyas-" + fmt(inici) + "@cumple-marc",
+          "DTSTAMP:" + fmt(new Date()),
+          "DTSTART:" + fmt(inici),
+          "DTEND:" + fmt(fi),
+          "SUMMARY:" + esc(titol),
+          "LOCATION:" + esc(lloc),
+          "DESCRIPTION:" + esc(desc),
+          "BEGIN:VALARM",
+          "TRIGGER:-P1D",
+          "ACTION:DISPLAY",
+          "DESCRIPTION:" + esc("Demà: " + titol),
+          "END:VALARM",
+          "BEGIN:VALARM",
+          "TRIGGER:-PT3H",
+          "ACTION:DISPLAY",
+          "DESCRIPTION:" + esc("Avui: " + titol + " a les 18:00"),
+          "END:VALARM",
+          "END:VEVENT",
+          "END:VCALENDAR"
+        ];
+        const blob = new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "concert-final-vinyas.ics";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+        const btn = $("calBtn");
+        btn.textContent = "✓ Obre l'arxiu per desar-lo";
+        setTimeout(() => (btn.textContent = "📅 Afegeix al calendari"), 4000);
+        launchConfetti(60);
+      }
+      $("calBtn").addEventListener("click", descarregarICS);
+    })();
+
+    // --- Confeti de paper (estrelles, cercles i tires) ---
+    const canvas = $("confetti");
+    const ctx = canvas.getContext("2d");
+    let pieces = [];
+    let animating = false;
+    const colors = ["#f3a9ba", "#fbd24d", "#2e4a8c", "#a8be7c", "#ffffff", "#b3b82c"];
+
+    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    addEventListener("resize", resize);
+    resize();
+
+    function launchConfetti(n = 150) {
+      if (isMobile()) n = Math.round(n * 0.6);
+      for (let i = 0; i < n; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: -20 - Math.random() * canvas.height * 0.4,
+          s: 6 + Math.random() * 8,
+          vx: -1.5 + Math.random() * 3,
+          vy: 2 + Math.random() * 3.5,
+          rot: Math.random() * Math.PI,
+          vr: -0.15 + Math.random() * 0.3,
+          shape: Math.floor(Math.random() * 3),
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+      if (!animating) { animating = true; requestAnimationFrame(draw); }
+    }
+
+    function drawStar(r) {
+      ctx.beginPath();
+      for (let i = 0; i < 10; i++) {
+        const a = -Math.PI / 2 + i * Math.PI / 5;
+        const rr = i % 2 ? r * 0.45 : r;
+        ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach((p) => {
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        if (p.shape === 0) drawStar(p.s * 1.1);
+        else if (p.shape === 1) { ctx.beginPath(); ctx.arc(0, 0, p.s / 2, 0, Math.PI * 2); ctx.fill(); }
+        else ctx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * 0.66);
+        ctx.restore();
+      });
+      pieces = pieces.filter((p) => p.y < canvas.height + 30);
+      if (pieces.length) requestAnimationFrame(draw);
+      else { animating = false; ctx.clearRect(0, 0, canvas.width, canvas.height); }
+    }
+
+    $("confettiBtn").addEventListener("click", () => launchConfetti(200));
+  </script>
+</body>
+</html>
